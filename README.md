@@ -53,7 +53,7 @@ ai-log-analyzer
 
 ###### &#x20;  ```bash
 
-###### &#x20;  git clone https://github.com
+###### &#x20;  git clone https://github.com/alexag35/ai-log-analyzer.git
 
 ###### &#x20;  cd ai-log-analyzer
 
