@@ -1,20 +1,44 @@
 import os
 import requests
+
 LOG_FILE_PATH = os.path.join("data", "mock_logs.log")
+
+# 1. Read the local logs
 if not os.path.exists(LOG_FILE_PATH):
     print(f"Error: Could not find the log file at {LOG_FILE_PATH}")
     exit(1)
 
 with open(LOG_FILE_PATH, "r") as file:
     log_data = file.read()
-print("Successfully loaded mock logs. Sending data to AI for triage...")
-system_instruction = (
+
+print("Successfully loaded mock logs. Sending data to local AI for triage...")
+
+# 2. Build the instruction prompt
+system_prompt = (
     "You are an automated Security Operations Center (SOC) Analyst. "
     "Review the following system logs. Identify any security threats, "
     "list suspicious IP addresses, and provide a clear severity rating (Low, Medium, High). "
-    "Keep your final summary punchy and easy for a human defender to read."
+    f"Keep your final summary punchy and easy for a human defender to read:\n\n{log_data}"
 )
-api_url = "https://duckduckgo.com"
-print("\n--- AI ANALYSIS REPORT ---")
-print(f"Analyzing {len(log_data.splitlines())} log lines...\n")
-print(f"PROMPT SENT TO AI:\n{system_instruction}\n\nDATA:\n{log_data}")
+
+# 3. Target the local Ollama API endpoint
+ollama_url = "http://localhost:11434/api/generate"
+payload = {
+    "model": "llama3:8b",
+    "prompt": system_prompt,
+    "stream": False
+}
+
+try:
+    # Send the logs to your offline AI engine
+    response = requests.post(ollama_url, json=payload, timeout=120)
+    response.raise_for_status()
+    
+    # Print the real AI response
+    analysis = response.json().get("response", "No response received.")
+    print("\n--- AI AUTOMATED TRIAGE REPORT ---")
+    print(analysis)
+
+except requests.exceptions.RequestException as e:
+    print(f"\nError connecting to Ollama: {e}")
+    print("Make sure you ran 'ollama run llama3:8b' in another window first!")
