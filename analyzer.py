@@ -1,5 +1,6 @@
 import os
 import requests
+import winsound  # Built-in Windows library for audio feedback
 
 LOG_FILE_PATH = os.path.join("data", "mock_logs.log")
 REPORT_FILE_PATH = "triage_report.txt"
@@ -41,12 +42,23 @@ try:
     print("\n--- AI AUTOMATED TRIAGE REPORT ---")
     print(analysis)
     
-    # 4. NEW FEATURE: Auto-save the report to a text file
+    # 4. Auto-save the report to a text file
     with open(REPORT_FILE_PATH, "w", encoding="utf-8") as report_file:
         report_file.write("=== AUTOMATED SOC ANALYST TRIAGE REPORT ===\n\n")
         report_file.write(analysis)
         
     print(f"\n[+] Success! Threat report auto-saved to: {REPORT_FILE_PATH}")
+
+        # 5. NEW FEATURE: Dynamic Threat Alarm System (Improved Scan)
+    # Triggers if the word "high" appears near the severity discussion
+    if "high:" in analysis.lower() or "severity: high" in analysis.lower() or "high severity" in analysis.lower():
+        print("\n🚨 [ALERT] CRITICAL THREAT INTEL RECEIVED! INITIATING AUDIO ALARM...")
+        # Beep parameters: winsound.Beep(frequency_in_hz, duration_in_milliseconds)
+        for _ in range(3):
+            winsound.Beep(2500, 400)  # High-pitched panic tone
+            winsound.Beep(1800, 300)  # Alternating warning tone
+    else:
+        print("\n[+] System state: Safe. No active alert alarms triggered.")
 
 except requests.exceptions.RequestException as e:
     print(f"\nError connecting to Ollama: {e}")
