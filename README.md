@@ -83,11 +83,25 @@ ai-log-analyzer
 
 ###### \## 🔍 Future Enhancements
 
-###### \- \[ ] Integrate a live local LLM using \*\*Ollama\*\* (`llama3` or `mistral`) for 100% private, offline data processing.
+###### \- \[x] Integrate a live local LLM using \*\*Ollama\*\* (`llama3` or `mistral`) for 100% private, offline data processing.
+
+###### - [x] Automate local reporting by auto-saving threat summaries to an isolated text file.
+
+###### - [x] Build an active hardware threat alarm using sound frequencies to notify human defenders of High severity incidents.
 
 ###### \- \[ ] Add JSON parsing support to ingest cloud logs (AWS CloudTrail / Windows Event Logs).
 
 ###### \- \[ ] Implement an automated email/Slack alert trigger when a `High` severity threat is detected.
 
 ###### 
+
+## 🛡️ Enterprise Architecture Context (SIEM & SOAR)
+In a real-world enterprise environment, this script functions as an automated **SOAR (Security Orchestration, Automation, and Response)** extension rather than a standalone logger. It sits at the final tier of the standard defensive data pipeline:
+
+1. **Ingestion (The OS/App):** Production environments (Windows/Linux) capture user login events natively.
+2. **Collection (The SIEM):** Aggregators like Splunk or ElasticSearch centralize data feeds.
+3. **Triage (This Tool):** This Python script queries the data pipeline, leverages local LLMs (Ollama) to bypass data privacy restrictions, dynamically updates active triage text files, and sounds physical hardware alerts for high-severity incidents requiring immediate human review.
+
+This structure allows human defenders to bypass manual log audits and focus exclusively on high-priority security exceptions flagged by the orchestration engine.
+
 
