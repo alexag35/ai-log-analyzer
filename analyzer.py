@@ -2,6 +2,7 @@ import os
 import requests
 
 LOG_FILE_PATH = os.path.join("data", "mock_logs.log")
+REPORT_FILE_PATH = "triage_report.txt"
 
 # 1. Read the local logs
 if not os.path.exists(LOG_FILE_PATH):
@@ -34,10 +35,18 @@ try:
     response = requests.post(ollama_url, json=payload, timeout=120)
     response.raise_for_status()
     
-    # Print the real AI response
+    # Extract the real AI response
     analysis = response.json().get("response", "No response received.")
+    
     print("\n--- AI AUTOMATED TRIAGE REPORT ---")
     print(analysis)
+    
+    # 4. NEW FEATURE: Auto-save the report to a text file
+    with open(REPORT_FILE_PATH, "w", encoding="utf-8") as report_file:
+        report_file.write("=== AUTOMATED SOC ANALYST TRIAGE REPORT ===\n\n")
+        report_file.write(analysis)
+        
+    print(f"\n[+] Success! Threat report auto-saved to: {REPORT_FILE_PATH}")
 
 except requests.exceptions.RequestException as e:
     print(f"\nError connecting to Ollama: {e}")
