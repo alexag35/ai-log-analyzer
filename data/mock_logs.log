@@ -1,0 +1,9 @@
+2026-07-01 10:00:15 INFO User 'admin' logged in successfully from 192.168.1.50
+2026-07-01 10:01:22 INFO GET /index.html 200 OK from 192.168.1.99
+2026-07-01 10:05:00 WARN Failed password for invalid user root from 203.0.113.5 port 49152 ssh2
+2026-07-01 10:05:01 WARN Failed password for invalid user root from 203.0.113.5 port 49153 ssh2
+2026-07-01 10:05:02 WARN Failed password for invalid user root from 203.0.113.5 port 49154 ssh2
+2026-07-01 10:10:44 INFO User 'developer' logged in successfully from 192.168.1.55
+2026-07-01 10:12:01 INFO 192.168.1.99 GET /products?category=shoes 200 OK HTTP/1.1
+2026-07-01 10:13:45 WARN 198.51.100.23 GET /login.php?user=admin'%20OR%20'1'='1 500 Error HTTP/1.1
+2026-07-01 10:13:49 WARN 198.51.100.23 GET /login.php?user=admin'%20UNION%20SELECT%20null,password%20FROM%20users-- 500 Error HTTP/1.1
