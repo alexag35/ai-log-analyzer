@@ -89,9 +89,13 @@ ai-log-analyzer
 
 ###### - [x] Build an active hardware threat alarm using sound frequencies to notify human defenders of High severity incidents.
 
-###### \- \[ ] Add JSON parsing support to ingest cloud logs (AWS CloudTrail / Windows Event Logs).
+###### \- \[x] Add JSON parsing support to ingest cloud logs (AWS CloudTrail / Windows Event Logs).
 
 ###### \- \[ ] Implement an automated email/Slack alert trigger when a `High` severity threat is detected.
+
+###### - [x] Automate local reporting by auto-saving threat summaries to an isolated text file.
+
+###### - [x] Build an active hardware threat alarm using sound frequencies to notify human defenders of High severity incidents.
 
 ###### 
 
